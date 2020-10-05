@@ -5,7 +5,7 @@
 plugins {
     id 'java'
     id 'scala'
-//    id 'maven-publish'
+    id 'com.github.johnrengelman.shadow' version '6.0.0'
 }
 
 repositories {
@@ -42,7 +42,7 @@ versions += [
 dependencies {
     implementation "org.scala-lang:scala-library:$versions.scalaLib"
 //    implementation "org.scala-lang:scala-reflect:"+scalaVersion
-    implementation "org.scala-lang:scala-compiler:$versions.scalaLib"
+//    implementation "org.scala-lang:scala-compiler:$versions.scalaLib"
 
     implementation 'com.bitwig:extension-api:12'
     implementation 'com.github.git-moss:DrivenByMoss:10.7.2'
@@ -50,8 +50,16 @@ dependencies {
 
 group = 'unthingable'
 version = '0.1'
-description = 'Machine JAM+'
-sourceCompatibility = '1.8'
+description = 'Maschine JAM+'
+sourceCompatibility = '12'
+targetCompatibility = "12"
+
+shadowJar {
+    dependencies {
+        exclude(dependency('com.bitwig:extension-api:12'))
+        exclude(dependency('com.github.git-moss:DrivenByMoss:10.7.2'))
+    }
+}
 
 //publishing {
 //    publications {

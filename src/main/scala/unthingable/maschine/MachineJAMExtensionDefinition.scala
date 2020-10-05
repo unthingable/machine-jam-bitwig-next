@@ -13,7 +13,7 @@ object MachineJAMExtensionDefinition {
 }
 
 class MachineJAMExtensionDefinition() extends ControllerExtensionDefinition {
-  override def getName: String = "Machine JAM+"
+  override def getName: String = "Maschine JAM+"
 
   override def getAuthor: String = "unthingable"
 
@@ -23,7 +23,7 @@ class MachineJAMExtensionDefinition() extends ControllerExtensionDefinition {
 
   override def getHardwareVendor = "Native Instruments"
 
-  override def getHardwareModel = "Machine JAM+"
+  override def getHardwareModel = "Maschine JAM+"
 
   override def getRequiredAPIVersion = 12
 
@@ -32,15 +32,16 @@ class MachineJAMExtensionDefinition() extends ControllerExtensionDefinition {
   def getNumMidiOutPorts = 1
 
   def listAutoDetectionMidiPortNames(list: AutoDetectionMidiPortNamesList, platformType: PlatformType): Unit = {
-    val inputs: Seq[String] = Seq(1,2,3,4)
+    Seq(1,2,3,4)
       .map(_.toString)
-      .flatMap(s => Seq(s"Maschine Jam - $s", s"Maschine Jam - $s Input"))
-
-    val outputs: Seq[String] = Seq(1,2,3,4)
-      .map(_.toString)
-      .flatMap(s => Seq(s"Maschine Jam - $s", s"Maschine Jam - $s Output"))
-
-    //list.add(inputs.toArray, outputs.toArray)
+      .foreach(s => {
+        list.add(
+          Array(s"Maschine Jam - $s"),
+          Array(s"Maschine Jam - $s"))
+        list.add(
+          Array(s"Maschine Jam - $s Input"),
+          Array(s"Maschine Jam - $s Output"))
+      })
   }
   override def createInstance(host: ControllerHost) = new MachineJAMExtension(this, host)
 }
